@@ -46,8 +46,11 @@
 CRGB leds[NUM_LEDS];
 #define PIN 2 
 #define UPDATES_PER_SECOND 100
-#define p1 17
-#define p2 18
+#define p1 17 //The pin number for reading the sensor
+#define p2 18 //THe pin number for reading the sensor
+#define INITBALLSPEED 3
+#define INITPADDLESPEED 5
+#define INCREASE_DIFFICULTY 10
 
 // This example shows several ways to set up and use 'palettes' of colors
 // with FastLED.
@@ -82,11 +85,12 @@ sprite paddleOne; // Player 1
 sprite paddleTwo; //Player 2
 movingSprite ball; //ball
 byte direct;
-int ballTime; //Holds the values of sprite update
-int paddleTime; //Holds the values of sprite update
+int ballTime; //is a counter for ball
+int paddleTime; //is a Counter for the paddle 
 
-int ballSpeed;
-int paddleSpeed;
+int ballSpeed; //The threshold for when the ball can update. Value is compared to the ball time
+int paddleSpeed; //The threshold for when the paddle can update. Value is compared to the paddle time
+int difficultCounter;
 void setup() {
     delay(6000); // power-up safety delay
 
@@ -98,9 +102,9 @@ void setup() {
     //Initializing sprite update
     ballTime=0;
     paddleTime=0;
-    
-    ballSpeed=3;
-    paddleSpeed=5;
+    difficultCounter=0;
+    ballSpeed=INITBALLSPEED;
+    paddleSpeed=INITPADDLESPEED;
     setAll(0,0,0);
     paddleOne.x=1;
     paddleOne.y=0;
@@ -149,6 +153,7 @@ void loop(){
         ball.vectorY=ball.vectorY * pow(-1,random(0,2));
       }
       ball.vectorX=ball.vectorX*-1;
+      difficultCounter++;
     }else if( ball.x+ball.vectorX == maxX-2 && (ball.y+ball.vectorY>=paddleTwo.y) && (ball.y+ball.vectorY<(paddleTwo.y+4))){
       if((ball.y+ball.vectorY==paddleTwo.y) &&(ball.vectorY>0)){
         ball.vectorY=ball.vectorY*-1;
@@ -165,6 +170,10 @@ void loop(){
     }
     
 
+  }
+  if(difficultCounter > INCREASE_DIFFICULTY){
+    ballSpeed=ballSpeed-1;
+    difficultCounter=0;
   }
   placePaddle(paddleOne);
   placePaddle(paddleTwo);
@@ -193,7 +202,7 @@ void border(){
 }
 
 void clearBorder(){
-    for(int i=0;i<30;i++){
+  for(int i=0;i<30;i++){
     leds[i].g=0;
     leds[i+(maxX*(maxY-1))].g=0;
   }
@@ -239,7 +248,7 @@ void clearBall(movingSprite ball){
 }
 
 void clearPaddle(sprite paddle){
-    leds[paddle.x + (paddle.y)*30].r=0;
+  leds[paddle.x + (paddle.y)*30].r=0;
   leds[paddle.x + (paddle.y+1)*30].r=0;
   leds[paddle.x + (paddle.y+2)*30].r=0;
 }
@@ -287,8 +296,8 @@ void endGame(){
   ballTime=0;
   paddleTime=0;
   
-  ballSpeed=5;
-  paddleSpeed=10;
+  ballSpeed=INITBALLSPEED;
+  paddleSpeed=INITPADDLESPEED;
   setAll(0,0,0);
   paddleOne.x=1;
   paddleOne.y=0;
