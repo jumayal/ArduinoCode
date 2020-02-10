@@ -39,9 +39,9 @@
 #define NINE {B00000,B01110,B00000,B00001,B00000}
 #define COLON {B10011,B10011,B11111, B10011,B10011}
 
-#define NUM_LEDS 480
-#define maxY 16
+#define maxY 20
 #define maxX 30
+#define NUM_LEDS maxY*maxX
 CRGB leds[NUM_LEDS];
 #define PIN 2 
 #define UPDATES_PER_SECOND 100
@@ -249,7 +249,7 @@ void endGame(){
   color=0;
   
   for(int letter =0; letter<5;letter++){
-    p= 57-(letter*5);
+    p= (letter*5);
     if(color==0){
         color=1;
       }else{
@@ -269,9 +269,14 @@ void endGame(){
       }
     }  
   }
-
+//0
+//30
+//60
+//90
+//120
+//180
   for(int letter =0; letter<6;letter++){
-    p=239 -(letter*5);
+    p=180 +(letter*5);
      if(color==0){
         color=1;
       }else{
@@ -280,7 +285,7 @@ void endGame(){
     for(int i =0; i<5;i++){
       row=30*i+p;
       for(int b =0; b<5;b++){
-        pixel=row-b;
+        pixel=row+b;
         if(!((tPhrase[letter][i]>>(4-b))&B00001)){
            if(color==0){
             setPixel(pixel,0,0,200);
