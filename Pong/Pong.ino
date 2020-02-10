@@ -38,6 +38,7 @@
 #define EIGHT {B00000,B01110,B10001,B01110,B00000}
 #define NINE {B00000,B01110,B00000,B00001,B00000}
 #define COLON {B10011,B10011,B11111, B10011,B10011}
+#define ENTER {B100000}
 
 #define maxY 20
 #define maxX 30
@@ -70,13 +71,13 @@ typedef struct mv{
 }movingSprite;
 
 //For displaying words
-byte phrase[][5]={C,O,V,E,R};
-byte tPhrase[][5]={S,E,N,S,O,R};
+byte phrase[][5]={C,O,V,E,R,ENTER,S,E,N,S,O,R};
 int pixel; // for words
-int row;
-int p;
+int row;  //Which row is the letter at
+int p;  //The origin of the letter character
 byte color;
-
+int ArrayLength;
+int newLine; //To hold the additional leds considering new lines
 sprite paddleOne; // Player 1
 sprite paddleTwo; //Player 2
 movingSprite ball; //ball
@@ -246,46 +247,29 @@ void clearPaddle(sprite paddle){
 void endGame(){
   clearAll();
   showStrip();
+  ArrayLength=sizeof(phrase);
   color=0;
-  
-  for(int letter =0; letter<5;letter++){
-    p= (letter*5);
+  newLine=0;
+  for(int letter =0; letter<ArrayLength;letter++){
     if(color==0){
         color=1;
       }else{
         color=0;
       }
+    if(phrase[letter][0]>B11111){
+      newLine=newLine+150;
+      continue;
+    }
+    p= (letter*5)+newLine;
     for(int i =0; i<5;i++){
-      row=30*i+p;
+      row=30*i+p+newLine;
       for(int b =0; b<5;b++){
-        pixel=row-b;
+        pixel=row+b;
         if(!((phrase[letter][i]>>(4-b))&B00001)){
           if(color==0){
             setPixel(pixel,100,100,100);
           }else{
             setPixel(pixel,0,0,200);
-          }
-        }
-      }
-    }  
-  }
-
-  for(int letter =0; letter<6;letter++){
-    p=180 +(letter*5);
-     if(color==0){
-        color=1;
-      }else{
-        color=0;
-      }
-    for(int i =0; i<5;i++){
-      row=30*i+p;
-      for(int b =0; b<5;b++){
-        pixel=row+b;
-        if(!((tPhrase[letter][i]>>(4-b))&B00001)){
-           if(color==0){
-            setPixel(pixel,0,0,200);
-          }else{
-            setPixel(pixel,100,100,100);
           }
         }
       }
