@@ -269,12 +269,7 @@ void endGame(){
       }
     }  
   }
-//0
-//30
-//60
-//90
-//120
-//180
+
   for(int letter =0; letter<6;letter++){
     p=180 +(letter*5);
      if(color==0){
