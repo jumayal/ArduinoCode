@@ -165,7 +165,7 @@ void loop(){
       ball.vectorX=ball.vectorX*-1;
     } else if((ball.x>=(maxX-1)) || (ball.x<1)){ //take this out when we can controll paddles
       endGame();
-    }else if((ball.y<2) ||(ball.y>(maxY-2))){
+    }   if((ball.y<2) ||(ball.y>(maxY-3))){
       ball.vectorY=ball.vectorY*-1;
     }
     
