@@ -165,7 +165,7 @@ void loop(){
       ball.vectorX=ball.vectorX*-1;
     } else if((ball.x>=(maxX-1)) || (ball.x<1)){ //take this out when we can controll paddles
       endGame();
-    }else if((ball.y<2) ||(ball.y>=maxY-2)){
+    }else if((ball.y<2) ||(ball.y>(maxY-2))){
       ball.vectorY=ball.vectorY*-1;
     }
     
@@ -256,10 +256,9 @@ void clearPaddle(sprite paddle){
 void endGame(){
   clearAll();
   showStrip();
-  ArrayLength=sizeof(phrase);
   color=0;
   newLine=0;
-  for(int letter =0; letter<ArrayLength;letter++){
+  for(int letter =0; letter<12;letter++){
     if(color==0){
         color=1;
       }else{
