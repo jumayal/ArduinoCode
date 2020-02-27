@@ -46,8 +46,8 @@
 CRGB leds[NUM_LEDS];
 #define PIN 2 
 #define UPDATES_PER_SECOND 100
-#define p1 17 //The pin number for reading the sensor
-#define p2 18 //THe pin number for reading the sensor
+#define p1 15 //The pin number for reading the sensor
+#define p2 14 //THe pin number for reading the sensor
 #define INITBALLSPEED 3
 #define INITPADDLESPEED 5
 #define INCREASE_DIFFICULTY 10
