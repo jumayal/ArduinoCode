@@ -40,7 +40,7 @@
 #define NINE {B00000,B01110,B00000,B00001,B00000}
 #define COLON {B10011,B10011,B11111, B10011,B10011}
 #include "FastLED.h"
-#define NUM_LEDS 330 //Max 420
+#define NUM_LEDS 600 //Max 420
 CRGB leds[NUM_LEDS];
 #define PIN 2 
 #define UPDATES_PER_SECOND 100
@@ -65,115 +65,17 @@ int pixel;
 int row;
 int p;
 byte color;
-byte phrase[][5]={I,E,E,E};
-byte tPhrase[][5]={S,L,U,G};
-byte phraseThree[][5]={M,A,K,E,R};
-byte phraseFour[][5] = {S,P,A,C,E};
-byte phraseFive[][5]= {SIX,COLON,THREE,ZERO};
-byte phraseSix[][5]= {E,TWO,BLANK,FIVE,ZERO,SIX};
+byte phrase[][5]={U,C,S,C};
+byte tPhrase[][5]={I,E,E,E};
+//byte phraseThree[][5]={M,A,K,E,R};
+//byte phraseFour[][5] = {S,P,A,C,E};
+//byte phraseFive[][5]= {SIX,COLON,THREE,ZERO};
+//byte phraseSix[][5]= {E,TWO,BLANK,FIVE,ZERO,SIX};
 void loop(){
   color=0;
-  
-  for(int letter =0; letter<4;letter++){
-    p= 25-(letter*5);
-    if(color==0){
-        color=1;
-      }else{
-        color=0;
-      }
-    for(int i =0; i<5;i++){
-      row=30*i+p;
-      for(int b =0; b<5;b++){
-        pixel=row-b;
-        if(!((phrase[letter][i]>>(4-b))&B00001)){
-          if(color==0){
-            setPixel(pixel,100,100,100);
-          }else{
-            setPixel(pixel,0,0,200);
-          }
-        }
-      }
-    }  
-  }
-
-  for(int letter =0; letter<4;letter++){
-    p=205 -(letter*5);
-     if(color==0){
-        color=1;
-      }else{
-        color=0;
-      }
-    for(int i =0; i<5;i++){
-      row=30*i+p;
-      for(int b =0; b<5;b++){
-        pixel=row-b;
-        if(!((tPhrase[letter][i]>>(4-b))&B00001)){
-           if(color==0){
-            setPixel(pixel,0,0,200);
-          }else{
-            setPixel(pixel,100,100,100);
-          }
-        }
-      }
-    }  
-  }
- 
-  showStrip();
-  delay(10000);
-  clearAll();
-  delay(1000);
-
-    color=0;
-  for(int letter =0; letter<5;letter++){
-    p= 27-(letter*5);
-    if(color==0){
-        color=1;
-      }else{
-        color=0;
-      }
-    for(int i =0; i<5;i++){
-      row=30*i+p;
-      for(int b =0; b<5;b++){
-        pixel=row-b;
-        if(!((phraseThree[letter][i]>>(4-b))&B00001)){
-          if(color==0){
-            setPixel(pixel,30,144,255);
-          }else{
-            setPixel(pixel,100,0,0);
-          }
-        }
-      }
-    }  
-  }
-
-  for(int letter =0; letter<5;letter++){
-    p=207 -(letter*5);
-     if(color==0){
-        color=1;
-      }else{
-        color=0;
-      }
-    for(int i =0; i<5;i++){
-      row=30*i+p;
-      for(int b =0; b<5;b++){
-        pixel=row-b;
-        if(!((phraseFour[letter][i]>>(4-b))&B00001)){
-           if(color==0){
-            setPixel(pixel,30,144,255);
-          }else{
-            setPixel(pixel,100,0,0);          }
-        }
-      }
-    }  
-  }
-  showStrip();
-  delay(12000);
-  clearAll();
-  delay(1000);
-
-//      color=0;
+  rainbowCycle(50);
 //  for(int letter =0; letter<4;letter++){
-//    p= 24-(letter*5);
+//    p= 25-(letter*5);
 //    if(color==0){
 //        color=1;
 //      }else{
@@ -183,19 +85,19 @@ void loop(){
 //      row=30*i+p;
 //      for(int b =0; b<5;b++){
 //        pixel=row-b;
-//        if(!((phraseFive[letter][i]>>(4-b))&B00001)){
+//        if(!((phrase[letter][i]>>(4-b))&B00001)){
 //          if(color==0){
-//            setPixel(pixel,30,144,255);
+//            setPixel(pixel,100,100,100);
 //          }else{
-//            setPixel(pixel,255,0,0);
+//            setPixel(pixel,0,0,200);
 //          }
 //        }
 //      }
 //    }  
 //  }
 //
-//  for(int letter =0; letter<6;letter++){
-//    p=209 -(letter*5);
+//  for(int letter =0; letter<4;letter++){
+//    p=205 -(letter*5);
 //     if(color==0){
 //        color=1;
 //      }else{
@@ -205,20 +107,121 @@ void loop(){
 //      row=30*i+p;
 //      for(int b =0; b<5;b++){
 //        pixel=row-b;
-//        if(!((phraseSix[letter][i]>>(4-b))&B00001)){
+//        if(!((tPhrase[letter][i]>>(4-b))&B00001)){
 //           if(color==0){
-//            setPixel(pixel,255,0,0);
+//            setPixel(pixel,0,0,200);
 //          }else{
-//            setPixel(pixel,30,144,255);
+//            setPixel(pixel,100,100,100);
 //          }
 //        }
 //      }
 //    }  
 //  }
+// 
 //  showStrip();
-//  delay(3000);
-//  setAll(0,0,0);
-//  delay(1000);
+////  delay(10000);
+////  clearAll();
+////  delay(1000);
+////
+////    color=0;
+////  for(int letter =0; letter<5;letter++){
+////    p= 27-(letter*5);
+////    if(color==0){
+////        color=1;
+////      }else{
+////        color=0;
+////      }
+////    for(int i =0; i<5;i++){
+////      row=30*i+p;
+////      for(int b =0; b<5;b++){
+////        pixel=row-b;
+////        if(!((phraseThree[letter][i]>>(4-b))&B00001)){
+////          if(color==0){
+////            setPixel(pixel,30,144,255);
+////          }else{
+////            setPixel(pixel,100,0,0);
+////          }
+////        }
+////      }
+////    }  
+////  }
+////
+////  for(int letter =0; letter<5;letter++){
+////    p=207 -(letter*5);
+////     if(color==0){
+////        color=1;
+////      }else{
+////        color=0;
+////      }
+////    for(int i =0; i<5;i++){
+////      row=30*i+p;
+////      for(int b =0; b<5;b++){
+////        pixel=row-b;
+////        if(!((phraseFour[letter][i]>>(4-b))&B00001)){
+////           if(color==0){
+////            setPixel(pixel,30,144,255);
+////          }else{
+////            setPixel(pixel,100,0,0);          }
+////        }
+////      }
+////    }  
+////  }
+////  showStrip();
+////  delay(12000);
+////  clearAll();
+////  delay(1000);
+//
+////      color=0;
+////  for(int letter =0; letter<4;letter++){
+////    p= 24-(letter*5);
+////    if(color==0){
+////        color=1;
+////      }else{
+////        color=0;
+////      }
+////    for(int i =0; i<5;i++){
+////      row=30*i+p;
+////      for(int b =0; b<5;b++){
+////        pixel=row-b;
+////        if(!((phraseFive[letter][i]>>(4-b))&B00001)){
+////          if(color==0){
+////            setPixel(pixel,30,144,255);
+////          }else{
+////            setPixel(pixel,255,0,0);
+////          }
+////        }
+////      }
+////    }  
+////  }
+////
+////  for(int letter =0; letter<6;letter++){
+////    p=209 -(letter*5);
+////     if(color==0){
+////        color=1;
+////      }else{
+////        color=0;
+////      }
+////    for(int i =0; i<5;i++){
+////      row=30*i+p;
+////      for(int b =0; b<5;b++){
+////        pixel=row-b;
+////        if(!((phraseSix[letter][i]>>(4-b))&B00001)){
+////           if(color==0){
+////            setPixel(pixel,255,0,0);
+////          }else{
+////            setPixel(pixel,30,144,255);
+////          }
+////        }
+////      }
+////    }  
+////  }
+////  showStrip();
+////  delay(3000);
+////  setAll(0,0,0);
+////  delay(1000);
+while(1){
+   ;
+}
 }
 
 //void Twinkle(byte red, byte green, byte blue, int Count, int SpeedDelay, boolean OnlyOne) {
