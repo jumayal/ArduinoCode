@@ -60,7 +60,7 @@ int row;
 int p;
 int newLine;
 byte color;
-byte phrase[][5]={I,E,E,E,ENTER,R,I,P,ENTER,R,I,P};
+byte phrase[][5]={H,E,L,L,O,ENTER,ENTER,W,O,R,L,D};
 void loop(){
   color=0;
   newLine=0;
@@ -89,6 +89,7 @@ void loop(){
   }
   showStrip();
   delay(1000);
+  clearAll();
 }
 
 void Twinkle(byte red, byte green, byte blue, int Count, int SpeedDelay, boolean OnlyOne) {
