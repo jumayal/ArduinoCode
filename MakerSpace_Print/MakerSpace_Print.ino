@@ -68,7 +68,7 @@ void loop(){
   for(int letter =0; letter<12;letter++){
     if(phrase[letter][0]>B11111){
       newLine++;
-      p=149*newLine;
+      p=149*newLine; //149 to go to next row
       continue;
     }
     for(int i =0; i<5;i++){
@@ -76,7 +76,7 @@ void loop(){
       for(int b =0; b<5;b++){
         pixel=row+b;
         if(!((phrase[letter][i]>>(4-b))&B00001)){
-          if(color==0){
+          if(color%2==0){
             setPixel(pixel,100,100,100);
           }else{
             setPixel(pixel,0,0,200);
@@ -84,7 +84,8 @@ void loop(){
         }
       }
     }
-    p= p+6;  
+    p= p+6;  //5 is the length of the letter but 6 to add an extra space
+    color++;
   }
   showStrip();
   delay(1000);
