@@ -45,9 +45,19 @@ byte ENTER[] = {B100000};
 #define PIN 2 
 #define UPDATES_PER_SECOND 100
 
+typedef struct object{
+  int x;
+  int y;
+  byte direct;
+}sprite;
+
+int prev;
+sprite sun;
+sprite moon;
 CRGB leds[NUM_LEDS];
 DateTime now;
 RTClib RTC;
+bool day_night=0;
 void setup() {
     delay( 3000 ); // power-up safety delay
     Serial.begin(57600);
@@ -64,18 +74,57 @@ int newLine;
 byte color;
 int firstDigit;
 int secondDigit;
-//byte phrase[][5]={H,E,L,L,L,ENTER,W,O,R,L,D};
+
+
 void loop(){
   now = RTC.now();
   printText();
+  if(day_night== true){
+     placeSun(sun);
+  }else{
+    placeMoon(moon);
+  }
   showStrip();
   delay(1000);
   clearAll();
-}
-void replaceArray( int *arr,byte letter[5]){
 
- 
 }
+
+void placeSun(sprite s){
+  for(int i=1;i<6;i++){
+    if(s.x+i>=0 & s.x+i<30){
+      setPixel((s.x+i)+(s.y)*30,100,100,0);
+      setPixel((s.x+i)+(s.y+4)*30,100,100,0);
+    }
+  }
+  for(int j=1;j<4;j++){
+    if(s.x>=0 & s.x<30){
+      setPixel((s.x)+(s.y+j)*30,100,100,0);
+    }
+    if(s.x+6>=0 & s.x+6<30){
+      setPixel((s.x+6)+(s.y+j)*30,100,100,0);
+    }
+  }
+}
+void placeMoon(sprite m){
+  for(int i=1;i<6;i++){
+    if(m.x+i>=0 & m.x+i<30){
+      leds[(m.x+i)+(m.y)*30]=CRGB::DarkSlateGray;
+      leds[(m.x+i)+(m.y+4)*30]=CRGB::DarkSlateGray;
+    }
+  }
+  for(int j=1;j<4;j++){
+    if(m.x>=0 & m.x<30){
+      leds[(m.x)+(m.y+j)*30]=CRGB::DarkSlateGray;
+    }
+    if(m.x+6>=0 & m.x+6<30){
+      leds[(m.x+6)+(m.y+j)*30]=CRGB::DarkSlateGray;
+    }
+  }
+}
+
+//up 1
+//right 3
 void Twinkle(byte red, byte green, byte blue, int Count, int SpeedDelay, boolean OnlyOne) {
   setAll(0,0,0);
   
@@ -96,7 +145,7 @@ void showStrip() {
 
 }
 
-
+//7 oclock 3*4 at bottom right
 void printText(){
   color=0;
   newLine=0;
@@ -116,49 +165,140 @@ void printText(){
     case 1:
       printLetter(ZERO);
       printLetter(ONE);
+      if(day_night==true){
+          sun.x=14;
+          sun.y=12;
+      }else{
+          moon.x=14;
+          moon.y=12;
+      }
       break;
     case 2:
       printLetter(ZERO);
       printLetter(TWO);
+      if(day_night==true){
+        sun.x=17;
+        sun.y=13;
+      }else{
+        moon.x=17;
+        moon.y=13;
+      }
       break;
     case 3:
       printLetter(ZERO);
       printLetter(THREE);
+      if(day_night==true){
+        sun.x=20;
+        sun.y=14;
+      }else{
+        moon.x=20;
+        moon.y=14;
+      }
       break;
     case 4:
       printLetter(ZERO);
       printLetter(FOUR);
+      if(day_night==true){
+        sun.x=23;
+        sun.y=15;
+      }else{
+        moon.x=23;
+        moon.y=15;    
+      }
     case 5:
       printLetter(ZERO);
       printLetter(FIVE);
+      if(day_night==true){
+        sun.x=26;
+        sun.y=16;
+      }else{
+        moon.x=26;
+        moon.y=16; 
+      }
       break;
     case 6:
       printLetter(ZERO);
       printLetter(SIX);
+      if(day_night==true){
+        sun.x=29;
+        sun.y=17;
+      }else{
+        moon.x=29;
+        moon.y=17;
+      }
       break;
     case 7:
       printLetter(ZERO);
       printLetter(SEVEN);
+      if(day_night==true){
+        sun.x=-4;
+        sun.y=16;
+      }else{
+        moon.x=-4;
+        moon.y=16;
+      }
       break;
     case 8:
       printLetter(ZERO);
       printLetter(EIGHT);
+      if(day_night==true){
+        sun.x=-1;
+        sun.y=15;
+      }else{
+        moon.x=-1;
+        moon.y=15;
+      }
       break;
     case 9:
       printLetter(ZERO);
       printLetter(NINE);
+       if(day_night==true){
+        sun.x=2;
+        sun.y=14;
+      }else{
+        moon.x=2;
+        moon.y=14;
+      }
       break;
     case 10:
       printLetter(ONE);
       printLetter(ZERO);
+       if(day_night==true){
+        sun.x=5;
+        sun.y=13;
+      }else{
+        moon.x=5;
+        moon.y=13;
+      }
       break;
     case 11:
       printLetter(ONE);
       printLetter(ONE);
+       if(day_night==true){
+        sun.x=8;
+        sun.y=12;
+      }else{
+        moon.x=8;
+        moon.y=12;
+      }
+      prev=11;
       break;
     case 12:
       printLetter(ONE);
       printLetter(TWO);
+      if(day_night==true & prev!=12){
+        day_night=false;
+      }else if(prev !=12){
+        day_night=true;
+      }
+      if(day_night==true){
+        sun.x=11;
+        sun.y=11;
+      }else{
+        moon.x=11;
+        moon.y=11;
+      }
+      prev=12;
       break;
     default:
       break;
