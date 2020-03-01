@@ -1,6 +1,6 @@
+#include <DS3231.h>
 #include <FastLED.h>
 #include <Wire.h>
-#include "DS3231.h"
 byte A[] = {B11011,B10101,B00000,B01110,B01110};
 byte B[] = {B00001,B01110,B01101,B01010,B00001};
 byte C[] = {B00000,B01111,B01111,B01111,B00000};
@@ -92,32 +92,32 @@ void loop(){
 
 void placeSun(sprite s){
   for(int i=1;i<6;i++){
-    if(s.x+i>=0 & s.x+i<30){
+    if((s.x+i>=0) && (s.x+i<30)){
       setPixel((s.x+i)+(s.y)*30,100,100,0);
       setPixel((s.x+i)+(s.y+4)*30,100,100,0);
     }
   }
   for(int j=1;j<4;j++){
-    if(s.x>=0 & s.x<30){
+    if((s.x>=0) && (s.x<30)){
       setPixel((s.x)+(s.y+j)*30,100,100,0);
     }
-    if(s.x+6>=0 & s.x+6<30){
+    if((s.x+6>=0) && (s.x+6<30)){
       setPixel((s.x+6)+(s.y+j)*30,100,100,0);
     }
   }
 }
 void placeMoon(sprite m){
   for(int i=1;i<6;i++){
-    if(m.x+i>=0 & m.x+i<30){
+    if((m.x+i>=0) && (m.x+i<30)){
       leds[(m.x+i)+(m.y)*30]=CRGB::DarkSlateGray;
       leds[(m.x+i)+(m.y+4)*30]=CRGB::DarkSlateGray;
     }
   }
   for(int j=1;j<4;j++){
-    if(m.x>=0 & m.x<30){
+    if((m.x>=0) && (m.x<30)){
       leds[(m.x)+(m.y+j)*30]=CRGB::DarkSlateGray;
     }
-    if(m.x+6>=0 & m.x+6<30){
+    if((m.x+6>=0) && (m.x+6<30)){
       leds[(m.x+6)+(m.y+j)*30]=CRGB::DarkSlateGray;
     }
   }
@@ -286,7 +286,7 @@ void printText(){
     case 12:
       printLetter(ONE);
       printLetter(TWO);
-      if(day_night==true & prev!=12){
+      if((day_night==true) && (prev!=12)){
         day_night=false;
       }else if(prev !=12){
         day_night=true;
