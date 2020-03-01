@@ -48,16 +48,16 @@ byte ENTER[] = {B100000};
 typedef struct object{
   int x;
   int y;
-  byte direct;
 }sprite;
 
-int prev;
 sprite sun;
 sprite moon;
 CRGB leds[NUM_LEDS];
 DateTime now;
 RTClib RTC;
-bool day_night=0;
+DS3231 am_pm;
+bool h12;
+bool day_night;
 void setup() {
     delay( 3000 ); // power-up safety delay
     Serial.begin(57600);
@@ -65,6 +65,7 @@ void setup() {
     FastLED.addLeds<WS2811, PIN, GRB>(leds, NUM_LEDS).setCorrection( TypicalLEDStrip );
     FastLED.setBrightness(100); //0-255
     setAll(0,0,0);
+    am_pm.getHour(h12,day_night);
 }
 
 int pixel;
@@ -281,16 +282,11 @@ void printText(){
         moon.x=8;
         moon.y=12;
       }
-      prev=11;
       break;
     case 12:
       printLetter(ONE);
       printLetter(TWO);
-      if((day_night==true) && (prev!=12)){
-        day_night=false;
-      }else if(prev !=12){
-        day_night=true;
-      }
+      am_pm.getHour(h12,day_night);
       if(day_night==true){
         sun.x=11;
         sun.y=11;
@@ -298,7 +294,6 @@ void printText(){
         moon.x=11;
         moon.y=11;
       }
-      prev=12;
       break;
     default:
       break;
