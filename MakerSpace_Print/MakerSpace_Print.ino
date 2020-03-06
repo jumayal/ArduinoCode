@@ -66,6 +66,8 @@ void setup() {
     FastLED.setBrightness(100); //0-255
     setAll(0,0,0);
     am_pm.getHour(h12,day_night);
+    day_night=!day_night;
+    Serial.println(day_night);
 }
 
 int pixel;
@@ -79,6 +81,18 @@ int secondDigit;
 
 void loop(){
   now = RTC.now();
+  Serial.print(now.year(), DEC);
+    Serial.print('/');
+    Serial.print(now.month(), DEC);
+    Serial.print('/');
+    Serial.print(now.day(), DEC);
+    Serial.print(' ');
+    Serial.print(now.hour(), DEC);
+    Serial.print(':');
+    Serial.print(now.minute(), DEC);
+    Serial.print(':');
+    Serial.print(now.second(), DEC);
+    Serial.println();
   printText();
   if(day_night== true){
      placeSun(sun);
@@ -163,6 +177,7 @@ void printText(){
   p=p+30;
   color=1;
   switch(now.hour()){
+    case 13:
     case 1:
       printLetter(ZERO);
       printLetter(ONE);
@@ -174,6 +189,7 @@ void printText(){
           moon.y=12;
       }
       break;
+    case 14:
     case 2:
       printLetter(ZERO);
       printLetter(TWO);
@@ -185,6 +201,7 @@ void printText(){
         moon.y=13;
       }
       break;
+    case 15:
     case 3:
       printLetter(ZERO);
       printLetter(THREE);
@@ -196,6 +213,7 @@ void printText(){
         moon.y=14;
       }
       break;
+    case 16:
     case 4:
       printLetter(ZERO);
       printLetter(FOUR);
@@ -206,6 +224,7 @@ void printText(){
         moon.x=23;
         moon.y=15;    
       }
+    case 17:
     case 5:
       printLetter(ZERO);
       printLetter(FIVE);
@@ -217,6 +236,7 @@ void printText(){
         moon.y=16; 
       }
       break;
+    case 18:
     case 6:
       printLetter(ZERO);
       printLetter(SIX);
@@ -228,6 +248,7 @@ void printText(){
         moon.y=17;
       }
       break;
+    case 19:
     case 7:
       printLetter(ZERO);
       printLetter(SEVEN);
@@ -239,6 +260,7 @@ void printText(){
         moon.y=16;
       }
       break;
+    case 20:
     case 8:
       printLetter(ZERO);
       printLetter(EIGHT);
@@ -250,6 +272,7 @@ void printText(){
         moon.y=15;
       }
       break;
+    case 21:
     case 9:
       printLetter(ZERO);
       printLetter(NINE);
@@ -261,6 +284,7 @@ void printText(){
         moon.y=14;
       }
       break;
+    case 22:
     case 10:
       printLetter(ONE);
       printLetter(ZERO);
@@ -272,6 +296,7 @@ void printText(){
         moon.y=13;
       }
       break;
+    case 23:
     case 11:
       printLetter(ONE);
       printLetter(ONE);
@@ -283,10 +308,12 @@ void printText(){
         moon.y=12;
       }
       break;
+    case 0:
     case 12:
       printLetter(ONE);
       printLetter(TWO);
       am_pm.getHour(h12,day_night);
+      day_night=!day_night;
       if(day_night==true){
         sun.x=11;
         sun.y=11;
